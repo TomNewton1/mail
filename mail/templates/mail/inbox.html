@@ -12,9 +12,16 @@
     <hr>
 
     <div id="emails-view">
-        <p>Some content here.</p>
     </div>
 
+    <div class="table-responsive">
+        <table id="email-table" class="table">
+            <tbody id = "emailTable">
+            </tbody>
+        </table>
+    </div>
+
+   
     <div id="compose-view">
         <h3>New Email</h3>
         <form id="compose-form">
@@ -28,11 +35,14 @@
                 <input class="form-control" id="compose-subject" placeholder="Subject">
             </div>
             <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input id="submit-button" type="submit" class="btn btn-primary"/>
+            <input id="submit-button" type="submit" class="btn btn-primary mt-2"/>
         </form>
     </div>
+
+    
 {% endblock %}
 
 {% block script %}
     <script src="{% static 'mail/inbox.js' %}"></script>
+    <script src="jquery-3.2.1.min.js"> </script> 
 {% endblock %}
