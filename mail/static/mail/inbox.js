@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function compose_email() {
 
-    // Show the mailbox and hide other views
-    document.querySelector('#emails-view').style.display = 'none'; //hides the emails-view div (inbox titlename). 
-    document.querySelector('#compose-view').style.display = 'block'; // Shows block where you compose email. 
+  // Show the mailbox and hide other views
+  document.querySelector('#emails-view').style.display = 'none'; // Hides the emails inbox  view. 
+  document.querySelector('#compose-view').style.display = 'block'; // Shows block where you compose email.
+  document.querySelector('#email-view').style.display = 'none'; // Hides individual email view. 
+
 
   // Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
@@ -56,7 +58,10 @@ function load_mailbox(mailbox) {
 
   // Show and hide neccessary views.
   document.querySelector('#compose-view').style.display = 'none'; // Hides the compose view HTML div.
-  document.querySelector('#email-table').style.display = 'block'; // Hides the compose view HTML div.
+  document.querySelector('#emails-view').style.display = 'block'; // Shows the emails inbox view.
+  document.querySelector('#email-view').style.display = 'none'; // Hidees the individual email view. 
+
+
 
   // Gets all the emails in the given mailbox
 
@@ -65,52 +70,79 @@ function load_mailbox(mailbox) {
     method: 'GET',
   })
   .then(response => response.json())
-  .then(result => {
-    // Build email row item
-    buildTable(result)
-    // Print result
-    console.log(result);
+  .then(emails => {
+    // Print emails to consol
+    console.log(emails);
+    // Create div for each email
+    emails.forEach(email => {
+      // Create a new div element
+      const div = document.createElement('div');
+      div.innerHTML = `
+              <span style="width: 240px; display: inline-block">${email.sender}</span>
+              <span>${email.subject}</span>
+              <span style="float: right;" >${email.timestamp}</span>`;
+              
+      div.className = "email-inbox";
+      // Append emails inbox to the emails-view
+      document.getElementById("emails-view").appendChild(div);
+
+      // Check if email has been read or not and assign appropriate color. 
+      if (email.read = "read") {
+        div.style.backgroundColor = "grey";
+      } else {
+        div.style.backgroundColor = "white";
+      }
+
+      // Add event listener on click to open a new email. 
+      div.addEventListener('click', function (){
+        
+        // Get the specifc email id.
+        var email_id = email.id
+        console.log(email.id)
+
+        fetch(`/emails/${email_id}`, {
+          method: 'GET',
+        })
+        .then(response => response.json())
+        .then(email => {
+
+          // Update the email as read on click via a PUT request. 
+
+          // Load function that displays the email contents.
+          load_email(email)
+        })
+      });
+    });
   });
 
+  function load_email(email_info){
 
-  function buildTable(data){
-    var email_item = document.getElementById('emailTable')
-    email_item.innerHTML = ''
+  // Show and hide neccessary views.
+  document.querySelector('#compose-view').style.display = 'none'; // Hides the compose view HTML div.
+  document.querySelector('#emails-view').style.display = 'none'; // Shows the emails inbox view.
+  document.querySelector('#email-view').style.display = 'block'; // Shows the individual email view. 
 
-    for (var i = 0; i < data.length; i++){
-      if(mailbox == 'inbox' || 'archive'){
-        if(data.read = 'true'){
-      var row = `<tr class="read">
-                  <td class="action"><input type="checkbox" /></td>
-                  <td class="action"><i class="fa fa-star-o"></i></td>
-                  <td class="name" <a href="#">${data[i].recipients}</td>
-                  <td class="subject" <a href="#">${data[i].subject}</td>
-                  <td class="time" <a href="#">${data[i].timestamp}</td>
-                </tr>`
-      email_item.innerHTML += row}
-          else {
-            var row = `<tr class="read" >
-                  <td class="action"><input type="checkbox" /></td>
-                  <td class="action"><i class="fa fa-star-o"></i></td>
-                  <td class="name" <a href="#">${data[i].recipients}</td>
-                  <td class="subject" <a href="#">${data[i].subject}</td>
-                  <td class="time" <a href="#">${data[i].timestamp}</td>
-                </tr>`
-          }
-      } else if (mailbox == 'sent'){
-        var row = `<tr>
-                  <td class="action"><input type="checkbox" /></td>
-                  <td class="action"><i class="fa fa-star-o"></i></td>
-                  <td class="name" <a href="#">${data[i].sender}</td>
-                  <td class="subject" <a href="#">${data[i].subject}</td>
-                  <td class="time" <a href="#">${data[i].timestamp}</td>
-                </tr>`
-      email_item.innerHTML += row
-      }
+  const email_subject = document.createElement('h3');
+  email_subject.innerHTML = `${email_info.subject}`;
 
-      }
-    }
+  const email_contents = document.createElement('ul');
+  email_contents.style = "list-style-type:none; padding: 0; list-style-type: none;"
+  email_contents.innerHTML = `
+                    <li><b>From:</b> ${email_info.sender}</li>
+                    <li><b>To:</b> ${email_info.recipients}</li>
+                    <li><b>Subject:</b> ${email_info.subject}</li>
+                    <li><b>Date:</b> ${email_info.timestamp}</li>`;
 
+  const email_body = document.createElement('p');  
+  email_body.innerHTML = `${email_info.body}`
+  
+  // Load components to be displayed
+  document.querySelector('#email-view').innerHTML = "";
+  document.querySelector("#email-view").append(email_contents);
+  document.querySelector('#email-view').append(email_subject);
+  document.querySelector('#email-view').append(email_body);
+
+  }
 
 }
 

@@ -10,18 +10,17 @@
     <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
     <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
     <hr>
-
+    
     <div id="emails-view">
     </div>
 
-    <div class="table-responsive">
-        <table id="email-table" class="table">
-            <tbody id = "emailTable">
-            </tbody>
-        </table>
+    <div id="email-view">
     </div>
 
-   
+
+    
+
+
     <div id="compose-view">
         <h3>New Email</h3>
         <form id="compose-form">
@@ -44,5 +43,4 @@
 
 {% block script %}
     <script src="{% static 'mail/inbox.js' %}"></script>
-    <script src="jquery-3.2.1.min.js"> </script> 
 {% endblock %}
