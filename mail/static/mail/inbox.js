@@ -87,7 +87,7 @@ function load_mailbox(mailbox) {
       document.getElementById("emails-view").appendChild(div);
 
       // Check if email has been read or not and assign appropriate color. 
-      if (email.read = "read") {
+      if (email.read) {
         div.style.backgroundColor = "grey";
       } else {
         div.style.backgroundColor = "white";
@@ -108,19 +108,39 @@ function load_mailbox(mailbox) {
 
           // Update the email as read on click via a PUT request. 
 
+          fetch(`/emails/${email_id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+              read: true
+            })
+          })
+
           // Load function that displays the email contents.
-          load_email(email)
+          load_email(email, mailbox)
         })
       });
     });
   });
 
-  function load_email(email_info){
+  // Function needs to take in what inbox it is in to then render different views if the email is in the inbox or the archive box. 
+  function load_email(email_info, inbox){
 
   // Show and hide neccessary views.
   document.querySelector('#compose-view').style.display = 'none'; // Hides the compose view HTML div.
   document.querySelector('#emails-view').style.display = 'none'; // Shows the emails inbox view.
-  document.querySelector('#email-view').style.display = 'block'; // Shows the individual email view. 
+  document.querySelector('#email-view').style.display = 'block'; // Shows the individual email view.
+
+
+  // Show and hidde items depending on inbox 
+
+  if (mailbox == "inbox"){
+
+  } else if (mailbox = "archive"){
+
+  } else if (mailbox = "sent"){
+
+  }
+  
 
   const email_subject = document.createElement('h3');
   email_subject.innerHTML = `${email_info.subject}`;
@@ -135,12 +155,54 @@ function load_mailbox(mailbox) {
 
   const email_body = document.createElement('p');  
   email_body.innerHTML = `${email_info.body}`
+
+  const reply_button = document.createElement('button');
+  reply_button.innerHTML = `<i class="fas fa-reply"></i>`
+
+  const archive_button = document.createElement('button');
+  archive_button.innerHTML = `<i class="fas fa-archive"></i>`
+
+  const move_to_inbox = document.createElement('button');
+  move_to_inbox.innerHTML = `<i class="fas fa-inbox"></i>`
+
+
+  function move_to_inbox_or_archive (put_variable){
+
+    // Add event listener on click to archive mail
+    archive_button.addEventListener('click', function (){
+
+    // Update the email as read on click via a PUT request. 
+
+    fetch(`/emails/${email_info.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        archived: put_variable
+      })
+    })
+
+    // Load function that displays the email contents.
+    load_mailbox('inbox')
+  });
+
+  }
   
+
+
   // Load components to be displayed
   document.querySelector('#email-view').innerHTML = "";
   document.querySelector("#email-view").append(email_contents);
   document.querySelector('#email-view').append(email_subject);
   document.querySelector('#email-view').append(email_body);
+  document.querySelector('#email-view').append(reply_button);
+
+  if (mailbox == "archive") {
+    document.querySelector('#email-view').append(move_to_inbox);
+    move_to_inbox_or_archive (put_variable=false)
+
+  } else if (mailbox == "inbox") {
+    document.querySelector('#email-view').append(archive_button);
+    move_to_inbox_or_archive (put_variable=true);
+  }
 
   }
 
