@@ -159,19 +159,19 @@ function load_mailbox(mailbox) {
   const reply_button = document.createElement('button');
   reply_button.innerHTML = `<i class="fas fa-reply"></i>`
 
-  const archive_button = document.createElement('button');
-  archive_button.innerHTML = `<i class="fas fa-archive"></i>`
+  const move_to_archive_button = document.createElement('button');
+  move_to_archive_button.innerHTML = `<i class="fas fa-archive"></i>`
 
-  const move_to_inbox = document.createElement('button');
-  move_to_inbox.innerHTML = `<i class="fas fa-inbox"></i>`
+  const move_to_inbox_button = document.createElement('button');
+  move_to_inbox_button.innerHTML = `<i class="fas fa-inbox"></i>`
 
 
-  function move_to_inbox_or_archive (put_variable){
+  function move_to_inbox_or_archive (put_variable, button_type){
 
-    // Add event listener on click to archive mail
-    archive_button.addEventListener('click', function (){
+    // Change button depending on the 
+    button_type.addEventListener('click', function (){
 
-    // Update the email as read on click via a PUT request. 
+    // Update the email as read on click via a PUT request.
 
     fetch(`/emails/${email_info.id}`, {
       method: 'PUT',
@@ -179,15 +179,16 @@ function load_mailbox(mailbox) {
         archived: put_variable
       })
     })
-
-    // Load function that displays the email contents.
-    load_mailbox('inbox')
+    .then(response => {
+      console.log(`Status code: ${response.status}`)
+      load_mailbox('inbox')
+      })
   });
+
+
 
   }
   
-
-
   // Load components to be displayed
   document.querySelector('#email-view').innerHTML = "";
   document.querySelector("#email-view").append(email_contents);
@@ -195,13 +196,14 @@ function load_mailbox(mailbox) {
   document.querySelector('#email-view').append(email_body);
   document.querySelector('#email-view').append(reply_button);
 
+  // Load the add to archive or add to inbox button. 
   if (mailbox == "archive") {
-    document.querySelector('#email-view').append(move_to_inbox);
-    move_to_inbox_or_archive (put_variable=false)
+    document.querySelector('#email-view').append(move_to_inbox_button);
+    move_to_inbox_or_archive (put_variable=false, button_type = move_to_inbox_button)
 
   } else if (mailbox == "inbox") {
-    document.querySelector('#email-view').append(archive_button);
-    move_to_inbox_or_archive (put_variable=true);
+    document.querySelector('#email-view').append(move_to_archive_button);
+    move_to_inbox_or_archive (put_variable=true, button_type = move_to_archive_button);
   }
 
   }
