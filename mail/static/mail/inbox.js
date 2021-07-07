@@ -20,13 +20,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	load_mailbox("inbox");
 });
 
-function compose_email(recipients, subject, body, timestamp) {
+function compose_email(recipients, subject, body, timestamp, email_reply) {
 	// Show the mailbox and hide other views
 	document.querySelector("#emails-view").style.display = "none"; // Hides the emails inbox  view.
 	document.querySelector("#compose-view").style.display = "block"; // Shows block where you compose email.
 	document.querySelector("#email-view").style.display = "none"; // Hides individual email view.
 
-	// Clear out composition fields
+  if (email_reply){
+    // Clear out composition fields
 	document.querySelector("#compose-recipients").value = "";
 	document.querySelector("#compose-subject").value = "";
 	document.querySelector("#compose-body").value = "";
@@ -34,19 +35,27 @@ function compose_email(recipients, subject, body, timestamp) {
   // Reply to email paramaters 
   document.querySelector("#compose-recipients").value = recipients
 
-
   // Check if Re: in subject title, if not then append Re: to subject title. 
   if (subject.includes("Re:")) {
     document.querySelector("#compose-subject").value = subject
+    document.querySelector("#compose-body").value = body
+
   } else { re_subject = "Re: " + subject;
   document.querySelector("#compose-subject").value = re_subject
 
+  // Pre-fill email with previous date sent.
+  var new_body = `On ${timestamp}` + ` ${recipients}` + " wrote: \n \n" + body + "\n ------ \n";
+  document.querySelector("#compose-body").value = new_body
+  }
+  } else {
+
+	// Clear out composition fields
+	document.querySelector("#compose-recipients").value = "";
+	document.querySelector("#compose-subject").value = "";
+	document.querySelector("#compose-body").value = "";
+
   }
   
-  // Pre-fill email with previous date sent.
-  var new_body = `On ${timestamp}` + ` ${recipients}` + " wrote: \n \n" + body;
-  document.querySelector("#compose-body").value = new_body
-
 
 }
 
@@ -173,9 +182,9 @@ function load_mailbox(mailbox) {
 		reply_button.innerHTML = `<i class="fas fa-reply"></i>`;
 
 		reply_button.addEventListener("click", function () {
-			// Need to pass some variables into this function for it to carry out.
-			// Need to adapt this function to take in parameters.
-			compose_email(email_info.sender, email_info.subject, email_info.body, email_info.timestamp);
+
+      var email_reply = "true";
+			compose_email(email_info.sender, email_info.subject, email_info.body, email_info.timestamp,email_reply);
 		});
 
 		const move_to_archive_button = document.createElement("button");
