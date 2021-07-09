@@ -6,17 +6,6 @@ textarea {
     min-height: 400px;
 }
 
-.email-inbox {
-    transition: box-shadow .3s;
-    
-    background: #fff;
-}
-
-.email-inbox:hover {
-    border: 3px solid #ccc;
-    box-shadow: 0 0 11px rgba(33,33,33,.2); 
-  }
-
 .navbar {
     border-bottom: 1px solid lightgray;
 }
@@ -50,3 +39,17 @@ textarea {
     display: block;
 }
 
+
+.email-inbox { 
+    font-size: .9rem;
+    padding: 10px 10px;
+    border-bottom: 1px solid lightgrey;
+    border-collapse: collapse;
+    font-weight: bold;
+    transition: box-shadow .3s;
+}
+
+.email-inbox:hover {
+    box-shadow: 0 0 50px rgba(33,33,33,.2); 
+    cursor: pointer;
+  }

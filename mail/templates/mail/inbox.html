@@ -3,12 +3,12 @@
 
 {% block body %}
 
-    <div class="container" style="margin-left: 20px;">
+    <div class="container-fluid px-5" >
         <div class="row">
-            <nav class="col-md-2 min-vh-100 d-none d-md-block sidebar border-right mt-4" style="color: white;">
+            <nav class="col-md-2 min-vh-100 border-right mt-4" style="color: white;">
             <div class="sidebar-sticky">
             <a id="compose" class="google_compose_btn" href="#"><div class="text">Compose</div></a>
-                    <ul class="nav flex-column">
+                    <ul class="nav flex-column ml-4">
                         <li class="nav-item">
                             <button id="inbox" class="btn"><i class="fas fa-inbox"></i> Inbox ({{request.user.email|length}}) </button>
                         </li>

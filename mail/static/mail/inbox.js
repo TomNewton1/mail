@@ -84,7 +84,7 @@ const send_email = (ev) => {
 
 function load_mailbox(mailbox) {
 	// Show the mailbox name
-	document.querySelector("#emails-view").innerHTML = `<h3>${
+	document.querySelector("#emails-view").innerHTML = `<h3 style="border-bottom: 1px solid lightgrey; margin: 0; padding: 10px;">${
 		mailbox.charAt(0).toUpperCase() + mailbox.slice(1)
 	}</h3>`;
 
@@ -107,19 +107,22 @@ function load_mailbox(mailbox) {
 				// Create a new div element
 				const div = document.createElement("div");
 				div.innerHTML = `
+              <div class="far fa-square" style="color: grey; margin-right: 20px;"></div>
               <span style="width: 240px; display: inline-block">${email.sender}</span>
               <span>${email.subject}</span>
               <span style="float: right;" >${email.timestamp}</span>`;
-
+        
 				div.className = "email-inbox";
 				// Append emails inbox to the emails-view
 				document.getElementById("emails-view").appendChild(div);
 
 				// Check if email has been read or not and assign appropriate color.
 				if (email.read) {
-					div.style.backgroundColor = "grey";
+					div.style.backgroundColor = "rgba(242,245,245,0.8)";
+          div.style.fontWeight = 'normal';
 				} else {
 					div.style.backgroundColor = "white";
+          div.style.fontWeight = 'bold';
 				}
 
 				// Add event listener on click to open a new email.
