@@ -6,6 +6,7 @@
         <title>{% block title %}Mail{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'mail/styles.css' %}">
 
@@ -31,6 +32,7 @@
     The links collapse into the mobile menu
 -->
 <nav class="navbar navbar-expand-md navbar-light" style="background-color: white;">
+    <button class="btn"><i class="fa fa-bars"></i></button>
     <a class="navbar-brand" href="{% url 'index' %}">
         <img src="{% static 'mail/images/gmail.png' %}" width="109px" height="40px" class="d-inline-block align-top" alt="">
     </a>

@@ -1,3 +1,7 @@
+* {
+    font-family: Helvetica,Arial,sans-serif;
+  }
+
 textarea {
     min-height: 400px;
 }
@@ -15,5 +19,34 @@ textarea {
 
 .navbar {
     border-bottom: 1px solid lightgray;
+}
+
+.google_compose_btn {
+    height: 56px;
+    width: 150px;
+    border-radius: 90px;
+	background-color: white;
+    color: #3c4043;
+    display: inline-flex;
+	box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
+    background-position: 10px;
+    text-decoration: none;
+	
+}
+.google_compose_btn .text {
+    margin-left: 1px;
+    font-family: Verdana, serif;
+    font-size: 14px;
+    line-height: 54px;
+    display: block;
+}
+.google_compose_btn::before {
+	background-image: url(https://www.gstatic.com/images/icons/material/colored_icons/1x/create_32dp.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    content: '';
+    min-width: 56px;
+    display: block;
 }
 
