@@ -53,3 +53,21 @@ textarea {
     box-shadow: 0 0 50px rgba(33,33,33,.2); 
     cursor: pointer;
   }
+
+.card { 
+width: 800px;
+box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.card-header {
+background-color: #404040;
+border-top-left-radius: 20px;
+border-top-right-radius: 20px;
+}
+
+
+.form-control {
+border: 0;
+border-bottom: 1px solid lightgrey;
+border-radius: 0px;
+}

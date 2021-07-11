@@ -236,15 +236,5 @@ function load_mailbox(mailbox) {
 		}
 	}
 
-  // Show and hide the sidebar
-  function hide_side_nav() {
-    var side_bar = document.getElementById("side_nav");
-    if (side_bar.style.display === "none") {
-      side_bar.style.display = "block";
-    } else {
-      side_bar.style.display = "none";
-    }
-  }
-
 
 }
