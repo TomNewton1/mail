@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	document
 		.getElementById("submit-button")
 		.addEventListener("click", send_email);
-  
 
 	// By default, load the inbox
 	load_mailbox("inbox");
@@ -27,37 +26,38 @@ function compose_email(recipients, subject, body, timestamp, email_reply) {
 	document.querySelector("#compose-view").style.display = "block"; // Shows block where you compose email.
 	document.querySelector("#email-view").style.display = "none"; // Hides individual email view.
 
-  if (email_reply){
-    // Clear out composition fields
-	document.querySelector("#compose-recipients").value = "";
-	document.querySelector("#compose-subject").value = "";
-	document.querySelector("#compose-body").value = "";
+	if (email_reply) {
+		// Clear out composition fields
+		document.querySelector("#compose-recipients").value = "";
+		document.querySelector("#compose-subject").value = "";
+		document.querySelector("#compose-body").value = "";
 
-  // Reply to email paramaters 
-  document.querySelector("#compose-recipients").value = recipients
+		// Reply to email paramaters
+		document.querySelector("#compose-recipients").value = recipients;
 
-  // Check if Re: in subject title, if not then append Re: to subject title. 
-  if (subject.includes("Re:")) {
-    document.querySelector("#compose-subject").value = subject
-    document.querySelector("#compose-body").value = body
+		// Check if Re: in subject title, if not then append Re: to subject title.
+		if (subject.includes("Re:")) {
+			document.querySelector("#compose-subject").value = subject;
+			document.querySelector("#compose-body").value = body;
+		} else {
+			re_subject = "Re: " + subject;
+			document.querySelector("#compose-subject").value = re_subject;
 
-  } else { re_subject = "Re: " + subject;
-  document.querySelector("#compose-subject").value = re_subject
-
-  // Pre-fill email with previous date sent.
-  var new_body = `On ${timestamp}` + ` ${recipients}` + " wrote: \n \n" + body + "\n ------ \n";
-  document.querySelector("#compose-body").value = new_body
-  }
-  } else {
-
-	// Clear out composition fields
-	document.querySelector("#compose-recipients").value = "";
-	document.querySelector("#compose-subject").value = "";
-	document.querySelector("#compose-body").value = "";
-
-  }
-  
-
+			// Pre-fill email with previous date sent.
+			var new_body =
+				`On ${timestamp}` +
+				` ${recipients}` +
+				" wrote: \n \n" +
+				body +
+				"\n ------ \n";
+			document.querySelector("#compose-body").value = new_body;
+		}
+	} else {
+		// Clear out composition fields
+		document.querySelector("#compose-recipients").value = "";
+		document.querySelector("#compose-subject").value = "";
+		document.querySelector("#compose-body").value = "";
+	}
 }
 
 // POSTS email to our /emails route.
@@ -85,7 +85,9 @@ const send_email = (ev) => {
 
 function load_mailbox(mailbox) {
 	// Show the mailbox name
-	document.querySelector("#emails-view").innerHTML = `<h3 style="border-bottom: 1px solid lightgrey; margin: 0; padding: 10px;">${
+	document.querySelector(
+		"#emails-view"
+	).innerHTML = `<h3 style="border-bottom: 1px solid lightgrey; margin: 0; padding: 10px;">${
 		mailbox.charAt(0).toUpperCase() + mailbox.slice(1)
 	}</h3>`;
 
@@ -107,12 +109,18 @@ function load_mailbox(mailbox) {
 			emails.forEach((email) => {
 				// Create a new div element
 				const div = document.createElement("div");
-				div.innerHTML = `
-              <div class="far fa-square" style="color: grey; margin-right: 20px;"></div>
-              <span style="width: 240px; display: inline-block">${email.sender}</span>
-              <span>${email.subject}</span>
-              <span style="float: right;" >${email.timestamp}</span>`;
-        
+				div.innerHTML = `<div class="row">
+                          <div class="col-sm">
+                            ${email.sender}
+                          </div>
+                          <div class="col-sm">
+                            ${email.subject}
+                          </div>
+                          <div class="col-sm">
+                            ${email.timestamp}
+                          </div>
+                        </div>`;
+
 				div.className = "email-inbox";
 				// Append emails inbox to the emails-view
 				document.getElementById("emails-view").appendChild(div);
@@ -120,10 +128,10 @@ function load_mailbox(mailbox) {
 				// Check if email has been read or not and assign appropriate color.
 				if (email.read) {
 					div.style.backgroundColor = "rgba(242,245,245,0.8)";
-          div.style.fontWeight = 'normal';
+					div.style.fontWeight = "normal";
 				} else {
 					div.style.backgroundColor = "white";
-          div.style.fontWeight = 'bold';
+					div.style.fontWeight = "bold";
 				}
 
 				// Add event listener on click to open a new email.
@@ -168,11 +176,12 @@ function load_mailbox(mailbox) {
 		}
 
 		const email_subject = document.createElement("h3");
-    email_subject.style = "margin-top: 20px; margin-left: 20px;"
+		email_subject.style = "margin-top: 20px; margin-left: 20px;";
 		email_subject.innerHTML = `${email_info.subject}`;
 
 		const email_contents = document.createElement("ul");
-		email_contents.style = "list-style-type:none; padding: 0; list-style-type: none; margin-left: 20px;";
+		email_contents.style =
+			"list-style-type:none; padding: 0; list-style-type: none; margin-left: 20px;";
 		email_contents.innerHTML = `
                     <li><b>From:</b> ${email_info.sender}</li>
                     <li><b>To:</b> ${email_info.recipients}</li>
@@ -180,26 +189,33 @@ function load_mailbox(mailbox) {
                     <li><b>Date:</b> ${email_info.timestamp}</li>`;
 
 		const email_body = document.createElement("p");
-    email_body.style = "margin-left: 20px;"
+		email_body.style = "margin-left: 20px;";
 		email_body.innerHTML = `${email_info.body}`;
 
 		const reply_button = document.createElement("button");
 		reply_button.innerHTML = `<i class="fas fa-reply"></i> Reply`;
-    reply_button.className = "btn btn-lg btn-outline-secondary reply-btn ";
+		reply_button.className = "btn btn-lg btn-outline-secondary reply-btn ";
 
 		reply_button.addEventListener("click", function () {
-
-      var email_reply = "true";
-			compose_email(email_info.sender, email_info.subject, email_info.body, email_info.timestamp,email_reply);
+			var email_reply = "true";
+			compose_email(
+				email_info.sender,
+				email_info.subject,
+				email_info.body,
+				email_info.timestamp,
+				email_reply
+			);
 		});
 
 		const move_to_archive_button = document.createElement("button");
 		move_to_archive_button.innerHTML = `<i class="fas fa-archive"></i> Archive`;
-    move_to_archive_button.className = "btn btn-lg btn-outline-secondary inbox-archive-btn";
+		move_to_archive_button.className =
+			"btn btn-lg btn-outline-secondary inbox-archive-btn";
 
 		const move_to_inbox_button = document.createElement("button");
 		move_to_inbox_button.innerHTML = `<i class="fas fa-inbox"></i> Move to Inbox`;
-    move_to_inbox_button.className = "btn btn-lg btn-outline-secondary inbox-archive-btn";
+		move_to_inbox_button.className =
+			"btn btn-lg btn-outline-secondary inbox-archive-btn";
 
 		// Enables the user to add or remove email from archive
 		function move_to_inbox_or_archive(put_variable, button_type) {
@@ -220,7 +236,7 @@ function load_mailbox(mailbox) {
 
 		// Load components to be displayed
 		document.querySelector("#email-view").innerHTML = "";
-    document.querySelector("#email-view").append(email_subject);
+		document.querySelector("#email-view").append(email_subject);
 		document.querySelector("#email-view").append(email_contents);
 		document.querySelector("#email-view").append(email_body);
 		document.querySelector("#email-view").append(reply_button);
@@ -240,6 +256,4 @@ function load_mailbox(mailbox) {
 			);
 		}
 	}
-
-
 }

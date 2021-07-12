@@ -29,7 +29,6 @@ textarea {
     border-radius: 0 30px 30px 0;
 }
 
-
 .google_compose_btn {
     height: 56px;
     width: 150px;
@@ -104,4 +103,18 @@ height: 45px;
 .inbox-archive-btn {
     margin-left: 20px;
     font-size: 16px;
+}
+
+.login_box { 
+    width: 45%;
+    height: 400px;
+    margin-top: 50px;
+    padding: 60px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+
+span
+{
+    white-space:nowrap
 }
