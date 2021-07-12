@@ -168,11 +168,11 @@ function load_mailbox(mailbox) {
 		}
 
 		const email_subject = document.createElement("h3");
+    email_subject.style = "margin-top: 20px; margin-left: 20px;"
 		email_subject.innerHTML = `${email_info.subject}`;
 
 		const email_contents = document.createElement("ul");
-		email_contents.style =
-			"list-style-type:none; padding: 0; list-style-type: none;";
+		email_contents.style = "list-style-type:none; padding: 0; list-style-type: none; margin-left: 20px;";
 		email_contents.innerHTML = `
                     <li><b>From:</b> ${email_info.sender}</li>
                     <li><b>To:</b> ${email_info.recipients}</li>
@@ -180,10 +180,12 @@ function load_mailbox(mailbox) {
                     <li><b>Date:</b> ${email_info.timestamp}</li>`;
 
 		const email_body = document.createElement("p");
+    email_body.style = "margin-left: 20px;"
 		email_body.innerHTML = `${email_info.body}`;
 
 		const reply_button = document.createElement("button");
-		reply_button.innerHTML = `<i class="fas fa-reply"></i>`;
+		reply_button.innerHTML = `<i class="fas fa-reply"></i> Reply`;
+    reply_button.className = "btn btn-lg btn-outline-secondary reply-btn ";
 
 		reply_button.addEventListener("click", function () {
 
@@ -192,10 +194,12 @@ function load_mailbox(mailbox) {
 		});
 
 		const move_to_archive_button = document.createElement("button");
-		move_to_archive_button.innerHTML = `<i class="fas fa-archive"></i>`;
+		move_to_archive_button.innerHTML = `<i class="fas fa-archive"></i> Archive`;
+    move_to_archive_button.className = "btn btn-lg btn-outline-secondary inbox-archive-btn";
 
 		const move_to_inbox_button = document.createElement("button");
-		move_to_inbox_button.innerHTML = `<i class="fas fa-inbox"></i>`;
+		move_to_inbox_button.innerHTML = `<i class="fas fa-inbox"></i> Move to Inbox`;
+    move_to_inbox_button.className = "btn btn-lg btn-outline-secondary inbox-archive-btn";
 
 		// Enables the user to add or remove email from archive
 		function move_to_inbox_or_archive(put_variable, button_type) {
@@ -216,8 +220,8 @@ function load_mailbox(mailbox) {
 
 		// Load components to be displayed
 		document.querySelector("#email-view").innerHTML = "";
+    document.querySelector("#email-view").append(email_subject);
 		document.querySelector("#email-view").append(email_contents);
-		document.querySelector("#email-view").append(email_subject);
 		document.querySelector("#email-view").append(email_body);
 		document.querySelector("#email-view").append(reply_button);
 
