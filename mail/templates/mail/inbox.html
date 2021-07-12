@@ -3,23 +3,16 @@
 
 {% block body %}
 
-    <div class="container-fluid px-5" >
+    <!-- Side Navbar -->
+    <div class="container-fluid " >
         <div class="row">
-            <nav id="side_nav" class="col-md-2 min-vh-100 border-right mt-4" style="color: white;">
-            <div class="sidebar-sticky">
-            <a id="compose" class="google_compose_btn" href="#"><div class="text">Compose</div></a>
-                    <ul class="nav flex-column ml-4">
-                        <li class="nav-item">
-                            <button id="inbox" class="btn"><i class="fas fa-inbox"></i> Inbox ({{request.user.email|length}}) </button>
-                        </li>
-                        <li class="nav-item">
-                            <button id="sent" class="btn"><i class="fas fa-paper-plane"></i> Sent </button>
-                        </li>
-                        <li class="nav-item">
-                            <button id="archived" class="btn"><i class="fas fa-archive"></i> Archived </button>
-    
-                        </li>
-                    </ul>
+            <nav id="side_nav" class="col-md-2 border-right mt-4 px-0" style="color: white;">
+                <div class="sidebar-sticky">
+                <a id="compose" class="google_compose_btn ml-2" href="#"><div class="text">Compose</div></a>
+                <div class="d-flex flex-column">
+                    <div id="inbox" class="p-2 side_nav_btn" style="color: black;"><i class="fas fa-inbox ml-4"></i> Inbox ({{request.user.email|length}})</div>
+                    <div id="sent" class="p-2 side_nav_btn" style="color: black;"><i class="fas fa-paper-plane ml-4"></i> Sent</div>
+                    <div id="archived" class="p-2 side_nav_btn" style="color: black;"><i class="fas fa-archive ml-4"></i> Archived</div> 
                 </div>
             </nav>
         
@@ -38,7 +31,7 @@
 
             <div class="card mt-4 ml-4">
                 <div class="card-header">
-                    <p style="color: white;">Compose Email</p>
+                    <p style="color: white;">New Message</p>
                 </div>
                 <div class="card-body">
                     <form id="compose-form">
@@ -52,7 +45,7 @@
                             <input class="form-control" id="compose-subject" placeholder="Subject">
                         </div>
                         <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-                        <input id="submit-button" type="submit" class="btn btn-primary mt-2"/>
+                        <input id="submit-button" type="submit" class="btn btn-primary mt-2" value="Send"/>
                     </form>
                 </div>
             </div>
