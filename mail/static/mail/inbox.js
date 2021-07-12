@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	document
 		.getElementById("submit-button")
 		.addEventListener("click", send_email);
+  
 
 	// By default, load the inbox
 	load_mailbox("inbox");

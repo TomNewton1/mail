@@ -9,11 +9,14 @@
             <nav id="side_nav" class="col-md-2 border-right mt-4 px-0" style="color: white;">
                 <div class="sidebar-sticky">
                 <a id="compose" class="google_compose_btn ml-2" href="#"><div class="text">Compose</div></a>
-                <div class="d-flex flex-column">
-                    <div id="inbox" class="p-2 side_nav_btn" style="color: black;"><i class="fas fa-inbox ml-4"></i> Inbox ({{request.user.email|length}})</div>
-                    <div id="sent" class="p-2 side_nav_btn" style="color: black;"><i class="fas fa-paper-plane ml-4"></i> Sent</div>
-                    <div id="archived" class="p-2 side_nav_btn" style="color: black;"><i class="fas fa-archive ml-4"></i> Archived</div> 
+                <div id="side_nav_items" class="d-flex flex-column mr-2">
+                    <div id="inbox" class="side_nav_btn p-2 active"  style="color: black;"><i class="fas fa-inbox ml-4"></i> Inbox ({{request.user.email|length}})</div>
+                    <div id="sent" class="side_nav_btn p-2" style="color: black;"><i class="fas fa-paper-plane ml-4"></i> Sent</div>
+                    <div id="archived" class="side_nav_btn p-2" style="color: black;"><i class="fas fa-archive ml-4"></i> Archived</div> 
                 </div>
+
+
+            
             </nav>
         
     
@@ -57,14 +60,6 @@
 
 {% block script %}
     <script src="{% static 'mail/inbox.js' %}"></script>
-    <script>
-        function hide_side_nav() {
-            var side_bar = document.getElementById("side_nav");
-            if (side_bar.style.display === "none") {
-                side_bar.style.display = "block";
-            } else {
-                side_bar.style.display = "none";
-            }
-        }
-</script>
+
+
 {% endblock %}

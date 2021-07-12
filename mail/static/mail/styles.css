@@ -24,10 +24,12 @@ textarea {
     display: inline-block;
     
 }
-.side_nav_btn:hover {
-    background: #eee;;
-    border-radius: 0 30px 30px 0;
+
+.active, .side_nav_btn:hover {
+background-color: #FDE8E7;
+border-radius: 0 30px 30px 0;
 }
+
 
 .google_compose_btn {
     height: 56px;

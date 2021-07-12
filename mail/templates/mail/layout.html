@@ -63,6 +63,28 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="{% static 'mail/inbox.js' %}"></script>
+    <script>
+        function hide_side_nav() {
+            var side_bar = document.getElementById("side_nav");
+            if (side_bar.style.display === "none") {
+                side_bar.style.display = "block";
+            } else {
+                side_bar.style.display = "none";
+            }
+        }
+
+        // Add active class to the current button (highlight it)
+        var header = document.getElementById("side_nav_items");
+        var btns = header.getElementsByClassName("side_nav_btn");
+        for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function(){
+        var current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+        });
+        }
+
+    </script>
         
     </body>
 </html>
