@@ -6,9 +6,11 @@
     <!-- Side Navbar -->
     <div class="container-fluid " >
         <div class="row">
-            <nav id="side_nav" class="col-md-2 border-right mt-4 px-0" style="color: white;">
+            <nav id="side_nav" class="col-4 col-sm-4 col-md-3 col-lg-2 col-xl-2 col-xxl-2 border-right mt-4 px-0" style="color: white;">
                 <div class="sidebar-sticky">
-                <a id="compose" class="google_compose_btn ml-2 mb-4" href="#"><div class="text">Compose</div></a>
+
+                <a id="compose" class="google_compose_btn ml-2 mb-4 mr-2" href="#"><span class="plus-sign"></span>Compose</a>
+
                 <div id="side_nav_items" class="d-flex flex-column mr-2">
                     <div id="inbox" class="side_nav_btn p-2 active"  style="color: black;"><i class="fas fa-inbox ml-4"></i> Inbox ({{request.user.email|length}})</div>
                     <div id="sent" class="side_nav_btn p-2" style="color: black;"><i class="fas fa-paper-plane ml-4"></i> Sent</div>
@@ -18,7 +20,7 @@
             
         
     
-            <div class="col-lg col-md-auto">
+            <div class="col-lg">
 
                 <div class=" mt-2" id="emails-view"></div>
 
@@ -26,7 +28,7 @@
 
                 <div id="compose-view">
 
-                <div class="card mt-4 mx-auto">
+                <div class="card mt-4 mx-4">
                     <div class="card-header">
                         <p style="color: white;">New Message</p>
                     </div>
