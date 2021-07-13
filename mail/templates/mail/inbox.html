@@ -12,12 +12,11 @@
                 <a id="compose" class="google_compose_btn ml-2 mb-4 mr-2" href="#"><span class="plus-sign"></span>Compose</a>
 
                 <div id="side_nav_items" class="d-flex flex-column mr-2">
-                    <div id="inbox" class="side_nav_btn p-2 active"  style="color: black;"><i class="fas fa-inbox ml-4"></i> Inbox ({{request.user.email|length}})</div>
+                    <div id="inbox" class="side_nav_btn p-2 active"  style="color: black;"><i class="fas fa-inbox ml-4"></i> Inbox <span id="inbox_count"></span> </div>
                     <div id="sent" class="side_nav_btn p-2" style="color: black;"><i class="fas fa-paper-plane ml-4"></i> Sent</div>
                     <div id="archived" class="side_nav_btn p-2" style="color: black;"><i class="fas fa-archive ml-4"></i> Archived</div> 
                 </div>
             </nav>
-            
         
     
             <div class="col-lg">

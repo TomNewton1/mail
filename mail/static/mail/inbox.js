@@ -11,14 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		.addEventListener("click", () => load_mailbox("archive"));
 	document.querySelector("#compose").addEventListener("click", compose_email);
 
-	// Assign the compose from to a variable
-	document
-		.getElementById("submit-button")
-		.addEventListener("click", send_email);
-
 	// By default, load the inbox
 	load_mailbox("inbox");
 });
+
 
 function compose_email(recipients, subject, body, timestamp, email_reply) {
 	// Show the mailbox and hide other views
@@ -76,14 +72,34 @@ const send_email = (ev) => {
 		.then((result) => {
 			// Print result
 			console.log(result);
+      load_mailbox("sent"); // Loads the users sent mailbox by executing the load_mailbox function
+      document.getElementById('inbox').classList.remove('active')
+      document.getElementById('sent').classList.add('active')
 		});
 
 	document.querySelector("#compose-form").reset(); //Clears the form for the next entry.
 
-	load_mailbox("sent"); // Loads the users sent mailbox by executing the load_mailbox function
 };
 
+function count_inbox_emails(mailbox, emails) {
+  // Count the number of unread emails in the inbox
+  var counter = 0;
+
+  if (mailbox == "inbox") {
+    emails.forEach((email) => {
+      if (email.read == false)
+      counter ++;
+    });
+  
+  // Update the HTML item
+  var inbox_icon = document. getElementById('inbox_count');
+  inbox_icon.innerHTML = `(${counter})`;
+
+  }
+}
+
 function load_mailbox(mailbox) {
+
 	// Show the mailbox name
 	document.querySelector(
 		"#emails-view"
@@ -97,7 +113,6 @@ function load_mailbox(mailbox) {
 	document.querySelector("#email-view").style.display = "none"; // Hidees the individual email view.
 
 	// Gets all the emails in the given mailbox
-
 	fetch(`/emails/${mailbox}`, {
 		method: "GET",
 	})
@@ -105,7 +120,11 @@ function load_mailbox(mailbox) {
 		.then((emails) => {
 			// Print emails to consol
 			console.log(emails);
-			// Create div for each email
+      
+      // Counts the number of unread emails in the inbox
+      count_inbox_emails(mailbox, emails)
+
+			// Create the inbox by pulling individual emails. 
 			emails.forEach((email) => {
 				// Create a new div element
 				const div = document.createElement("div");
@@ -152,7 +171,7 @@ function load_mailbox(mailbox) {
 								body: JSON.stringify({
 									read: true,
 								}),
-							});
+							})
 
 							// Load function that displays the email contents.
 							load_email(email, mailbox);
@@ -160,6 +179,8 @@ function load_mailbox(mailbox) {
 				});
 			});
 		});
+  
+    
 
 	// Function needs to take in what inbox it is in to then render different views if the email is in the inbox or the archive box.
 	function load_email(email_info, inbox) {
@@ -167,13 +188,6 @@ function load_mailbox(mailbox) {
 		document.querySelector("#compose-view").style.display = "none"; // Hides the compose view HTML div.
 		document.querySelector("#emails-view").style.display = "none"; // Shows the emails inbox view.
 		document.querySelector("#email-view").style.display = "block"; // Shows the individual email view.
-
-		// Show and hidde items depending on inbox
-
-		if (mailbox == "inbox") {
-		} else if ((mailbox = "archive")) {
-		} else if ((mailbox = "sent")) {
-		}
 
 		const email_subject = document.createElement("h3");
 		email_subject.style = "margin-top: 20px; margin-left: 20px;";
@@ -207,15 +221,16 @@ function load_mailbox(mailbox) {
 			);
 		});
 
-		const move_to_archive_button = document.createElement("button");
-		move_to_archive_button.innerHTML = `<i class="fas fa-archive"></i> Archive`;
-		move_to_archive_button.className =
-			"btn btn-lg btn-outline-secondary inbox-archive-btn";
+  
+    const move_to_archive_button = document.createElement("button");
+    move_to_archive_button.innerHTML = `<i class="fas fa-archive"></i> Archive`;
+    move_to_archive_button.className = "btn btn-lg btn-outline-secondary inbox-archive-btn";
 
-		const move_to_inbox_button = document.createElement("button");
-		move_to_inbox_button.innerHTML = `<i class="fas fa-inbox"></i> Move to Inbox`;
-		move_to_inbox_button.className =
-			"btn btn-lg btn-outline-secondary inbox-archive-btn";
+    const move_to_inbox_button = document.createElement("button");
+    move_to_inbox_button.innerHTML = `<i class="fas fa-inbox"></i> Move to Inbox`;
+    move_to_inbox_button.className = "btn btn-lg btn-outline-secondary inbox-archive-btn";
+
+
 
 		// Enables the user to add or remove email from archive
 		function move_to_inbox_or_archive(put_variable, button_type) {
@@ -230,6 +245,8 @@ function load_mailbox(mailbox) {
 				}).then((response) => {
 					console.log(`Status code: ${response.status}`);
 					load_mailbox("inbox");
+          document.getElementById('archived').classList.remove('active')
+          document.getElementById('inbox').classList.add('active')
 				});
 			});
 		}
@@ -248,12 +265,14 @@ function load_mailbox(mailbox) {
 				(put_variable = false),
 				(button_type = move_to_inbox_button)
 			);
+      
 		} else if (mailbox == "inbox") {
 			document.querySelector("#email-view").append(move_to_archive_button);
 			move_to_inbox_or_archive(
 				(put_variable = true),
 				(button_type = move_to_archive_button)
 			);
+      
 		}
 	}
 }
