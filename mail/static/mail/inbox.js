@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		.addEventListener("click", () => load_mailbox("archive"));
 	document.querySelector("#compose").addEventListener("click", compose_email);
 
+  // Assign the compose from to a variable 
+	document
+    .getElementById("submit-button")
+    .addEventListener("click", send_email);
+
 	// By default, load the inbox
 	load_mailbox("inbox");
 });
@@ -95,8 +100,8 @@ function count_inbox_emails(mailbox, emails) {
   var inbox_icon = document. getElementById('inbox_count');
   inbox_icon.innerHTML = `(${counter})`;
 
-  }
-}
+  };
+};
 
 function load_mailbox(mailbox) {
 
@@ -122,7 +127,7 @@ function load_mailbox(mailbox) {
 			console.log(emails);
       
       // Counts the number of unread emails in the inbox
-      count_inbox_emails(mailbox, emails)
+      count_inbox_emails(mailbox, emails);
 
 			// Create the inbox by pulling individual emails. 
 			emails.forEach((email) => {
