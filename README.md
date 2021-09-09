@@ -1,7 +1,6 @@
 # Mail (Gmail clone)
 
-
-[![](riverlevels.gif)](https://riverlevelsuk.herokuapp.com/)
+[![](mail/static/mail/mail.gif)](https://www.youtube.com/watch?v=Sj5qgODQ0ro&t=12s&ab_channel=TomasNewton)
 
 Mail is an email client that makes API calls to the send and receive emails.  The backend of the site is built using Django and the frontend is build using HTML, Bootstrap CSS and vanilla JavaScript. 
 
